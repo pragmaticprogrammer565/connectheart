@@ -1,0 +1,940 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ConnectHeart - Modern Dating Platform</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #ff4d6d;
+            --secondary: #8338ec;
+            --accent: #3a86ff;
+            --light: #ffffff;
+            --dark: #2d3748;
+            --success: #48bb78;
+            --warning: #ecc94b;
+            --gray-100: #f7fafc;
+            --gray-200: #edf2f7;
+            --gray-300: #e2e8f0;
+            --gray-600: #718096;
+            --gray-800: #2d3748;
+            --shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            --shadow-lg: 0 20px 40px rgba(0, 0, 0, 0.15);
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: var(--dark);
+            line-height: 1.6;
+            min-height: 100vh;
+            padding: 20px;
+            transition: var(--transition);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* Navigation */
+        .main-nav {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 20px;
+            margin-bottom: 30px;
+            box-shadow: var(--shadow);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .logo {
+            font-size: 2rem;
+            font-weight: bold;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+        }
+
+        .logo i {
+            color: var(--secondary);
+        }
+
+        .nav {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .nav-item {
+            padding: 12px 25px;
+            border-radius: 25px;
+            text-decoration: none;
+            color: var(--gray-800);
+            font-weight: 500;
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+        }
+
+        .nav-item:hover {
+            background: var(--gray-100);
+            transform: translateY(-2px);
+        }
+
+        .nav-item.active {
+            background: var(--primary);
+            color: white;
+        }
+
+        /* Page Content */
+        .page-content {
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .page-content.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Home Page */
+        .hero-section {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 30px;
+            padding: 60px 40px;
+            text-align: center;
+            margin-bottom: 40px;
+            box-shadow: var(--shadow-lg);
+        }
+
+        .hero-title {
+            font-size: 3.5rem;
+            font-weight: bold;
+            color: var(--primary);
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero-subtitle {
+            font-size: 1.3rem;
+            color: var(--gray-600);
+            margin-bottom: 30px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 15px 35px;
+            border: none;
+            border-radius: 30px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1.1rem;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+        }
+
+        .btn-secondary {
+            background: var(--secondary);
+            color: white;
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        /* Features Section */
+        .features-section {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .feature-card {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 30px;
+            text-align: center;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .feature-icon {
+            font-size: 3rem;
+            color: var(--primary);
+            margin-bottom: 20px;
+        }
+
+        .feature-title {
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-bottom: 15px;
+            color: var(--dark);
+        }
+
+        .feature-description {
+            color: var(--gray-600);
+        }
+
+        /* Login Page */
+        .login-container {
+            max-width: 500px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 30px;
+            padding: 40px;
+            box-shadow: var(--shadow-lg);
+        }
+
+        .login-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .login-title {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: var(--primary);
+            margin-bottom: 10px;
+        }
+
+        .login-subtitle {
+            color: var(--gray-600);
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: var(--dark);
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 15px 20px;
+            border: 2px solid var(--gray-200);
+            border-radius: 15px;
+            font-size: 1rem;
+            transition: var(--transition);
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(255, 77, 109, 0.1);
+        }
+
+        .form-options {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .remember-me {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .forgot-password {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .login-btn {
+            width: 100%;
+            padding: 15px;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 15px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .login-btn:hover {
+            background: #ff3359;
+            transform: translateY(-2px);
+        }
+
+        .signup-link {
+            text-align: center;
+            margin-top: 30px;
+            color: var(--gray-600);
+        }
+
+        .signup-link a {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        /* Social Login */
+        .social-login {
+            margin-top: 30px;
+            text-align: center;
+        }
+
+        .social-divider {
+            display: flex;
+            align-items: center;
+            margin: 20px 0;
+            color: var(--gray-600);
+        }
+
+        .social-divider::before,
+        .social-divider::after {
+            content: "";
+            flex: 1;
+            height: 1px;
+            background: var(--gray-300);
+            margin: 0 10px;
+        }
+
+        .social-buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+        }
+
+        .social-btn {
+            padding: 12px 20px;
+            border: 2px solid var(--gray-200);
+            border-radius: 15px;
+            background: white;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .social-btn:hover {
+            border-color: var(--primary);
+            transform: translateY(-2px);
+        }
+
+        /* Main App Content */
+        .main-content {
+            display: grid;
+            grid-template-columns: 1fr 2fr 1fr;
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+
+        .profile-card, .dating-feed, .sidebar {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 25px;
+            padding: 30px;
+            box-shadow: var(--shadow);
+        }
+
+        .profile-image {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 4px solid var(--primary);
+            margin-bottom: 20px;
+            transition: var(--transition);
+        }
+
+        .profile-image:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 20px rgba(255, 77, 109, 0.3);
+        }
+
+        .profile-name {
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: var(--dark);
+        }
+
+        .profile-stats {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .stat {
+            background: var(--gray-100);
+            padding: 15px;
+            border-radius: 15px;
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--primary);
+        }
+
+        .feed-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .feed-title {
+            font-size: 2rem;
+            color: var(--primary);
+            margin-bottom: 10px;
+        }
+
+        .user-card {
+            background: white;
+            border-radius: 20px;
+            padding: 0;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            margin-bottom: 30px;
+            transition: var(--transition);
+        }
+
+        .user-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .user-image {
+            width: 100%;
+            height: 300px;
+            object-fit: cover;
+        }
+
+        .user-info {
+            padding: 20px;
+        }
+
+        .user-name {
+            font-size: 1.3rem;
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: var(--dark);
+        }
+
+        .user-details {
+            color: var(--gray-600);
+            margin-bottom: 15px;
+        }
+
+        .user-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 20px;
+        }
+
+        .tag {
+            background: var(--gray-100);
+            padding: 5px 12px;
+            border-radius: 15px;
+            font-size: 0.9rem;
+            color: var(--gray-600);
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+        }
+
+        .btn-like {
+            background: var(--primary);
+            color: white;
+        }
+
+        .btn-pass {
+            background: var(--gray-200);
+            color: var(--gray-800);
+        }
+
+        .sidebar-section {
+            margin-bottom: 30px;
+        }
+
+        .sidebar-title {
+            font-size: 1.2rem;
+            font-weight: bold;
+            margin-bottom: 15px;
+            color: var(--dark);
+        }
+
+        .match-list {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .match-item {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 10px;
+            border-radius: 15px;
+            transition: var(--transition);
+        }
+
+        .match-item:hover {
+            background: var(--gray-100);
+        }
+
+        .match-image {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        /* Accessibility Features */
+        .accessibility-panel {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: white;
+            padding: 15px;
+            border-radius: 15px;
+            box-shadow: var(--shadow);
+            z-index: 1000;
+        }
+
+        .accessibility-btn {
+            background: var(--accent);
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 10px;
+            cursor: pointer;
+            margin: 5px;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .main-content {
+                grid-template-columns: 1fr;
+            }
+            
+            .hero-title {
+                font-size: 2.5rem;
+            }
+            
+            .nav {
+                flex-direction: column;
+                width: 100%;
+                margin-top: 15px;
+            }
+            
+            .nav-item {
+                text-align: center;
+            }
+            
+            .features-section {
+                grid-template-columns: 1fr;
+            }
+            
+            .hero-buttons {
+                flex-direction: column;
+            }
+        }
+
+        /* High Contrast Mode */
+        body.high-contrast {
+            background: #000;
+            color: #fff;
+        }
+        
+        body.high-contrast .profile-card,
+        body.high-contrast .dating-feed,
+        body.high-contrast .sidebar,
+        body.high-contrast .hero-section,
+        body.high-contrast .login-container,
+        body.high-contrast .feature-card {
+            background: #000;
+            color: #fff;
+            border: 2px solid #fff;
+        }
+
+        /* Large Text Mode */
+        body.large-text {
+            font-size: 18px;
+        }
+        
+        body.large-text .hero-title {
+            font-size: 3rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Navigation -->
+        <nav class="main-nav">
+            <a href="#" class="logo" onclick="showPage('home')">
+                <i class="fas fa-heart"></i>
+                ConnectHeart
+            </a>
+            <div class="nav">
+                <div class="nav-item active" onclick="showPage('home')">Home</div>
+                <div class="nav-item" onclick="showPage('login')">Login</div>
+                <div class="nav-item" onclick="showPage('app')">Dating App</div>
+            </div>
+        </nav>
+
+        <!-- Home Page -->
+        <div id="home-page" class="page-content active">
+            <div class="hero-section">
+                <h1 class="hero-title">Find Your Perfect Match</h1>
+                <p class="hero-subtitle">Connect with like-minded people and build meaningful relationships in a safe, modern dating environment.</p>
+                <div class="hero-buttons">
+                    <button class="btn btn-primary" onclick="showPage('login')">
+                        <i class="fas fa-user-plus"></i>Get Started
+                    </button>
+                    <button class="btn btn-secondary" onclick="showPage('app')">
+                        <i class="fas fa-play"></i>Try Demo
+                    </button>
+                </div>
+            </div>
+
+            <div class="features-section">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h3 class="feature-title">Safe & Secure</h3>
+                    <p class="feature-description">Advanced verification and moderation to ensure a safe dating experience for everyone.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-brain"></i>
+                    </div>
+                    <h3 class="feature-title">Smart Matching</h3>
+                    <p class="feature-description">AI-powered matching algorithm that learns your preferences over time.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-globe"></i>
+                    </div>
+                    <h3 class="feature-title">Global Community</h3>
+                    <p class="feature-description">Connect with people from around the world who share your interests and values.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Login Page -->
+        <div id="login-page" class="page-content">
+            <div class="login-container">
+                <div class="login-header">
+                    <h2 class="login-title">Welcome Back</h2>
+                    <p class="login-subtitle">Sign in to continue your journey</p>
+                </div>
+
+                <form id="login-form">
+                    <div class="form-group">
+                        <label class="form-label" for="email">Email Address</label>
+                        <input type="email" class="form-input" id="email" placeholder="Enter your email" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="password">Password</label>
+                        <input type="password" class="form-input" id="password" placeholder="Enter your password" required>
+                    </div>
+
+                    <div class="form-options">
+                        <label class="remember-me">
+                            <input type="checkbox">
+                            Remember me
+                        </label>
+                        <a href="#" class="forgot-password">Forgot password?</a>
+                    </div>
+
+                    <button type="submit" class="login-btn">
+                        <i class="fas fa-sign-in-alt"></i>Sign In
+                    </button>
+                </form>
+
+                <div class="signup-link">
+                    Don't have an account? <a href="#" onclick="showSignup()">Sign up now</a>
+                </div>
+
+                <div class="social-login">
+                    <div class="social-divider">Or continue with</div>
+                    <div class="social-buttons">
+                        <button class="social-btn">
+                            <i class="fab fa-google"></i>Google
+                        </button>
+                        <button class="social-btn">
+                            <i class="fab fa-facebook"></i>Facebook
+                        </button>
+                        <button class="social-btn">
+                            <i class="fab fa-apple"></i>Apple
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Dating App Page -->
+        <div id="app-page" class="page-content">
+            <div class="main-content">
+                <!-- Left Sidebar - User Profile -->
+                <div class="profile-card">
+                    <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/4124b1f0-d52c-4543-b55e-755b7c8bb5cd.png" alt="User profile picture showing a smiling person with warm lighting" class="profile-image">
+                    <h3 class="profile-name">Sarah Johnson</h3>
+                    <p class="user-details">28 • Software Engineer • New York</p>
+                    
+                    <div class="profile-stats">
+                        <div class="stat">
+                            <div class="stat-number">127</div>
+                            <div>Matches</div>
+                        </div>
+                        <div class="stat">
+                            <div class="stat-number">89%</div>
+                            <div>Profile Score</div>
+                        </div>
+                    </div>
+
+                    <div class="action-buttons">
+                        <button class="btn btn-primary">
+                            <i class="fas fa-edit"></i>Edit Profile
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Main Feed -->
+                <div class="dating-feed">
+                    <div class="feed-header">
+                        <h2 class="feed-title">Discover People</h2>
+                        <p>Swipe right to like, left to pass</p>
+                    </div>
+
+                    <!-- User Card 1 -->
+                    <div class="user-card">
+                        <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/21a611af-ee86-4011-837f-3e56cfd3bd04.png" alt="Professional portrait of Alex Chen smiling in casual business attire" class="user-image">
+                        <div class="user-info">
+                            <h3 class="user-name">Alex Chen, 29</h3>
+                            <p class="user-details">Architect • Tokyo • 15km away</p>
+                            <div class="user-tags">
+                                <span class="tag">Art Lover</span>
+                                <span class="tag">Travel</span>
+                                <span class="tag">Foodie</span>
+                            </div>
+                            <div class="action-buttons">
+                                <button class="btn btn-pass">
+                                    <i class="fas fa-times"></i>Pass
+                                </button>
+                                <button class="btn btn-like">
+                                    <i class="fas fa-heart"></i>Like
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- User Card 2 -->
+                    <div class="user-card">
+                        <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/19327b22-4b75-4781-bc83-e2acd83606a8.png" alt="Portrait of Maria Rodriguez laughing in natural outdoor lighting" class="user-image">
+                        <div class="user-info">
+                            <h3 class="user-name">Maria Rodriguez, 26</h3>
+                            <p class="user-details">Photographer • Barcelona • 8km away</p>
+                            <div class="user-tags">
+                                <span class="tag">Adventure</span>
+                                <span class="tag">Music</span>
+                                <span class="tag">Yoga</span>
+                            </div>
+                            <div class="action-buttons">
+                                <button class="btn btn-pass">
+                                    <i class="fas fa-times"></i>Pass
+                                </button>
+                                <button class="btn btn-like">
+                                    <i class="fas fa-heart"></i>Like
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Sidebar - Matches -->
+                <div class="sidebar">
+                    <div class="sidebar-section">
+                        <h3 class="sidebar-title">Recent Matches</h3>
+                        <div class="match-list">
+                            <div class="match-item">
+                                <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/98d8d1a2-a9f4-4d8b-98f3-247b91759689.png" alt="Profile picture of David Kim with stylish glasses" class="match-image">
+                                <div>
+                                    <div>David Kim</div>
+                                    <small>Online now</small>
+                                </div>
+                            </div>
+                            <div class="match-item">
+                                <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/0e061b30-8f6e-4d38-b47b-8a03acf3d3c8.png" alt="Profile picture of Emily Watson with natural makeup" class="match-image">
+                                <div>
+                                    <div>Emily Watson</div>
+                                    <small>Active 2h ago</small>
+                                </div>
+                            </div>
+                            <div class="match-item">
+                                <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/64adc29f-2609-4a49-91c4-28034c979804.png" alt="Profile picture of James Wilson in professional attire" class="match-image">
+                                <div>
+                                    <div>James Wilson</div>
+                                    <small>Active 5h ago</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Accessibility Panel -->
+    <div class="accessibility-panel">
+        <button class="accessibility-btn" onclick="toggleHighContrast()">
+            <i class="fas fa-contrast"></i>
+        </button>
+        <button class="accessibility-btn" onclick="toggleLargeText()">
+            <i class="fas fa-text-height"></i>
+        </button>
+    </div>
+
+    <script>
+        // Page Navigation
+        function showPage(pageId) {
+            // Hide all pages
+            document.querySelectorAll('.page-content').forEach(page => {
+                page.classList.remove('active');
+            });
+            
+            // Remove active class from all nav items
+            document.querySelectorAll('.nav-item').forEach(item => {
+                item.classList.remove('active');
+            });
+            
+            // Show selected page
+            document.getElementById(pageId + '-page').classList.add('active');
+            
+            // Add active class to clicked nav item
+            event.target.classList.add('active');
+        }
+
+        // Login Form Handling
+        document.getElementById('login-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            
+            // Simple validation
+            if (email && password) {
+                alert('Login successful! Redirecting to dating app...');
+                showPage('app');
+            }
+        });
+
+        // Signup function
+        function showSignup() {
+            alert('Sign up feature coming soon!');
+        }
+
+        // Like functionality
+        document.querySelectorAll('.btn-like').forEach(btn => {
+            btn.addEventListener('click', function() {
+                this.innerHTML = '<i class="fas fa-check"></i>Liked!';
+                this.style.background = 'var(--success)';
+                setTimeout(() => {
+                    this.closest('.user-card').style.opacity = '0';
+                    setTimeout(() => {
+                        this.closest('.user-card').remove();
+                    }, 300);
+                }, 1000);
+            });
+        });
+
+        // Pass functionality
+        document.querySelectorAll('.btn-pass').forEach(btn => {
+            btn.addEventListener('click', function() {
+                this.innerHTML = '<i class="fas fa-times"></i>Passed';
+                this.style.background = 'var(--gray-600)';
+                setTimeout(() => {
+                    this.closest('.user-card').style.opacity = '0';
+                    setTimeout(() => {
+                        this.closest('.user-card').remove();
+                    }, 300);
+                }, 1000);
+            });
+        });
+
+        // Accessibility Features
+        function toggleHighContrast() {
+            document.body.classList.toggle('high-contrast');
+        }
+
+        function toggleLargeText() {
+            document.body.classList.toggle('large-text');
+        }
+
+        // Keyboard navigation
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'ArrowRight') {
+                document.querySelector('.btn-like').click();
+            } else if (e.key === 'ArrowLeft') {
+                document.querySelector('.btn-pass').click();
+            }
+        });
+    </script>
+</body>
+</html>
+
